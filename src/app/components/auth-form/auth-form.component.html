@@ -1,0 +1,51 @@
+<form
+  (ngSubmit)="onSubmit()"
+  class="flex flex-col w-full text-left dark:text-color-1"
+  #authForm="ngForm">
+  <label class="mb-2">
+    Username
+    <input
+      appInput
+      [(ngModel)]="username"
+      minlength="5"
+      required
+      name="username"
+      type="text"
+      placeholder="Enter your username"
+      class="w-full max-w-full" />
+    <small>Minimum 5 characters</small>
+  </label>
+  <label>
+    Password
+    <input
+      appInput
+      [(ngModel)]="password"
+      minlength="8"
+      required
+      name="password"
+      type="password"
+      placeholder="Enter your password"
+      class="w-full max-w-full" />
+    <small>Minimum 8 characters</small>
+  </label>
+
+  <p *ngIf="errorMessage" class="text-red-500">
+    {{ errorMessage }}
+  </p>
+
+  <div class="flex flex-col mt-4 space-y-2">
+    <button
+      [disabled]="!authForm.form.valid || disableForm"
+      type="submit"
+      class="min-w-[150px] self-center px-3 py-3 text-xs text-white transition-transform rounded-full bg-primary hover:bg-primary-light active:translate-y-1 disabled:opacity-80">
+      Log in
+    </button>
+    <button
+      [disabled]="!authForm.form.valid || disableForm"
+      (click)="signup()"
+      type="button"
+      class="min-w-[150px] self-center px-3 py-3 text-xs font-bold transition-transform rounded-full text-color-3 bg-light-bg active:translate-y-1 disabled:opacity-80">
+      Sign up
+    </button>
+  </div>
+</form>

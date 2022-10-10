@@ -1,0 +1,11 @@
+<app-back></app-back>
+<div class="mx-auto">
+  <h1 class="my-4">New Invoice</h1>
+
+  <app-invoice-form
+    (submittedInvoice)="newInvoice($event)"
+    (cancel)="redirectToHome()">
+    <span cancelText>Discard</span>
+    <span submitText>Save & Send</span>
+  </app-invoice-form>
+</div>

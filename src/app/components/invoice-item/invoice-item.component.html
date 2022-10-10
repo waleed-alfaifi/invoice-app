@@ -1,0 +1,26 @@
+<article
+  class="flex flex-col px-6 py-4 bg-card-light rounded-lg shadow-sm text-sm md:text-lg min-h-[100px] dark:bg-card-dark">
+  <header class="flex justify-between mb-6">
+    <a [routerLink]="['invoice', invoice.id]">
+      <h4>
+        <span class="text-primary dark:text-color-2">#</span
+        >{{ invoice.id.substring(0, 7).toUpperCase() }}
+      </h4>
+    </a>
+    <p
+      class="text-sm font-light break-words text-color-2 md:text-lg dark:text-color-1">
+      {{ invoice.client.name }}
+    </p>
+  </header>
+  <div class="flex items-center mt-auto">
+    <div class="flex flex-col flex-[3]">
+      <!-- TODO: Add time tag -->
+      <span class="font-light text-color-2 dark:text-color-1"
+        >Due {{ dueDate | date: "d MMM y" }}</span
+      >
+      <strong class="mt-2">{{ total | currency }}</strong>
+    </div>
+
+    <app-invoice-status [status]="invoice.status"></app-invoice-status>
+  </div>
+</article>

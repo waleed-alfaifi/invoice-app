@@ -1,0 +1,28 @@
+<div
+  class="flex flex-col items-center justify-center min-h-[70vh]"
+  *ngIf="isLoading">
+  <h2 class="mt-10 mb-5">Loading...</h2>
+  <img
+    src="/assets/undraw_loading_re_5axr.svg"
+    alt="No invoices"
+    class="w-64 h-60" />
+</div>
+
+<div
+  class="flex flex-col items-center justify-center min-h-[70vh]"
+  *ngIf="!isLoading && invoices.length === 0; else invoicesLit">
+  <img src="/assets/empty.svg" alt="No invoices" class="w-64 h-60" />
+  <h2 class="mt-10 mb-5">There is nothing here</h2>
+  <p class="text-sm text-center text-color-2 dark:text-color-1">
+    Create a new invoice by clicking the <strong>New</strong> button and get
+    started
+  </p>
+</div>
+
+<ng-template #invoicesLit>
+  <section class="flex flex-col py-6 space-y-4">
+    <app-invoice-item
+      *ngFor="let invoice of invoices"
+      [invoice]="invoice"></app-invoice-item>
+  </section>
+</ng-template>

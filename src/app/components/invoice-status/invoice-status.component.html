@@ -1,0 +1,19 @@
+<div
+  class="flex items-center justify-center max-w-full px-4 py-3 ml-auto font-bold rounded-lg w-28 md:w-32 md:flex-1 dark:bg-transparent"
+  [ngClass]="{
+    'bg-label-1-back text-label-1-front dark:text-label-1-dark':
+      status === 'Paid',
+    'bg-label-2-back text-label-2-front dark:text-label-2-dark':
+      status === 'Pending',
+    'bg-label-3-back text-secondary dark:text-label-3-dark': status === 'Draft'
+  }">
+  <span
+    class="inline-block w-2 h-2 mx-2 rounded-full"
+    [ngClass]="{
+      'bg-label-1-front dark:bg-label-1-dark': status === 'Paid',
+      'bg-label-2-front dark:bg-label-2-dark': status === 'Pending',
+      'bg-secondary dark:bg-label-3-dark': status === 'Draft'
+    }"></span>
+
+  {{ status }}
+</div>

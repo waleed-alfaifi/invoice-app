@@ -1,0 +1,164 @@
+<app-back></app-back>
+<div
+  class="flex flex-col items-center justify-center min-h-[70vh]"
+  *ngIf="isLoading">
+  <h2 class="mt-10 mb-5">Loading...</h2>
+  <img
+    src="/assets/undraw_loading_re_5axr.svg"
+    alt="No invoices"
+    class="w-64 h-60" />
+</div>
+<section *ngIf="!isLoading && invoice">
+  <!-- Status - start -->
+  <div
+    class="flex items-center justify-between px-6 py-4 mt-6 text-sm rounded-lg bg-card-light dark:bg-card-dark md:text-lg">
+    <span class="text-color-2 dark:text-color-1">Status</span>
+    <app-invoice-status [status]="invoice.status"></app-invoice-status>
+  </div>
+  <!-- Status - end -->
+
+  <!-- Main content - start -->
+  <article
+    class="px-6 pt-4 pb-12 my-4 text-sm rounded-lg bg-card-light dark:bg-card-dark md:text-lg">
+    <header>
+      <strong
+        ><span class="text-color-2 dark:text-color-1">#</span
+        >{{ invoiceDisplayId }}</strong
+      >
+      <p class="mb-2 text-color-2 dark:text-color-1">
+        {{ invoice.description }}
+      </p>
+    </header>
+
+    <!-- Address start -->
+    <div class="mt-7 text-color-2 dark:text-color-1" *ngIf="invoice.address">
+      <div>{{ invoice.address.street }}</div>
+      <div>{{ invoice.address.city }}</div>
+      <div>{{ invoice.address.post_code }}</div>
+      <div>{{ invoice.address.country }}</div>
+    </div>
+    <!-- Address end -->
+
+    <!-- Date and receiver - start -->
+    <div class="flex justify-between mt-7">
+      <!-- Date start -->
+      <div class="space-y-4">
+        <div>
+          <div class="mb-2 text-color-2 dark:text-color-1">Invoice Date</div>
+          <div class="font-bold">{{ invoice.date | date: "yyyy-MM-dd" }}</div>
+        </div>
+        <div>
+          <div class="mb-2 text-color-2 dark:text-color-1">Payment Due</div>
+          <div class="font-bold">{{ dueDate | date: "yyyy-MM-dd" }}</div>
+        </div>
+      </div>
+      <!-- Date end -->
+
+      <!-- Receiver start -->
+      <div class="ml-auto sm:mr-10">
+        <span class="inline-block mb-2 text-color-2 dark:text-color-1">
+          Bill To
+        </span>
+        <h4 class="mb-2">{{ invoice.client.name }}</h4>
+        <div
+          class="text-color-2 dark:text-color-1"
+          *ngIf="invoice.client.address">
+          <div>{{ invoice.client.address.street }}</div>
+          <div>{{ invoice.client.address.city }}</div>
+          <div>{{ invoice.client.address.post_code }}</div>
+          <div>{{ invoice.client.address.country }}</div>
+        </div>
+      </div>
+      <!-- Receiver end -->
+    </div>
+    <!-- Date and receiver - end -->
+
+    <!-- Email start -->
+    <div class="flex flex-col mt-6" *ngIf="invoice.client.email">
+      <span class="inline-block mb-2 text-color-2 dark:text-color-1">
+        Sent to
+      </span>
+      <a [href]="'mailto:' + invoice.client.email">
+        <strong>
+          {{ invoice.client.email }}
+        </strong>
+      </a>
+    </div>
+    <!-- Email end -->
+
+    <!-- Items start -->
+    <div
+      class="p-6 mt-6 rounded-md bg-light-bg dark:bg-secondary"
+      *ngIf="invoice.items">
+      <div
+        *ngIf="invoice.items.length <= 0"
+        class="flex flex-col mb-4 text-xs text-center text-color-2 dark:text-color-1">
+        <span class="mb-2"> No items for this invoice </span>
+        <span> Click the Edit button to add some </span>
+      </div>
+      <div class="flex mb-6 last:mb-0" *ngFor="let item of invoice.items">
+        <div class="flex flex-col w-full">
+          <strong class="text-xs">{{ item.name }}</strong>
+          <span class="text-color-3"
+            >{{ item.quantity }} x {{ item.price | currency }}</span
+          >
+        </div>
+        <span class="mt-2 mr-auto text-xs font-bold">{{
+          item.price * item.quantity | currency
+        }}</span>
+      </div>
+
+      <div
+        class="flex items-center justify-between p-6 -mx-6 -mb-6 text-white rounded-b-md bg-dark-bg">
+        <span class="text-xs">Grand Total</span>
+        <span class="text-lg">{{ grandTotal | currency }}</span>
+      </div>
+    </div>
+    <!-- Items end -->
+  </article>
+  <!-- Main content - end -->
+
+  <!-- Actions start -->
+  <footer
+    class="flex justify-center p-6 -mx-6 space-x-2 bg-white mt-14 dark:bg-card-dark">
+    <button
+      class="px-4 text-xs font-bold transition-transform rounded-full text-color-3 bg-light-bg active:translate-y-1 dark:bg-secondary dark:text-color-1"
+      (click)="editInvoice()">
+      Edit
+    </button>
+    <button
+      (click)="openDeleteConfirm(deleteTemplate)"
+      class="px-4 text-xs text-white transition-transform bg-red-500 rounded-full active:translate-y-1">
+      Delete
+    </button>
+    <button
+      class="px-4 py-3 text-xs text-white transition-transform rounded-full bg-primary hover:bg-primary-light active:translate-y-1"
+      (click)="markPaid()">
+      Mark as Paid
+    </button>
+  </footer>
+  <!-- Actions end -->
+</section>
+
+<ng-template #deleteTemplate>
+  <div>
+    <h1 class="mb-2 dark:text-white">Confirm Deletion</h1>
+    <p class="text-sm text-color-2 dark:text-color-1">
+      Are you sure you want to delete invoice #{{ invoiceDisplayId }}? This
+      action cannot be undone.
+    </p>
+
+    <div class="flex justify-end mt-6 space-x-2">
+      <button
+        (click)="closeDeleteConfirm()"
+        class="px-6 py-3 text-xs font-bold transition-transform rounded-full text-color-3 bg-light-bg active:translate-y-1 dark:bg-secondary dark:text-color-1">
+        Cancel
+      </button>
+      <button
+        (click)="deleteInvoice(invoice?.id)"
+        class="px-5 py-3 text-xs text-white transition-transform bg-red-500 rounded-full active:translate-y-1">
+        Delete
+      </button>
+    </div>
+  </div>
+</ng-template>

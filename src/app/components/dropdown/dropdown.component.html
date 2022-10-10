@@ -1,0 +1,14 @@
+<div
+  class="absolute left-0 flex flex-col items-start justify-center py-2 pl-4 pr-8 space-y-2 bg-white rounded-md shadow-md top-5 dark:bg-dark-bg">
+  <div class="flex" *ngFor="let item of list">
+    <label class="flex font-bold">
+      <!-- TODO: make custom checkbox -->
+      <input
+        type="checkbox"
+        class="bg-primary"
+        [checked]="selectedValues.has(item.value)"
+        (change)="changeEvent($event, item.value)" />
+      <span class="ml-2"> {{ item.name }} </span>
+    </label>
+  </div>
+</div>

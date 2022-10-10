@@ -1,0 +1,89 @@
+<header class="flex justify-between w-full h-14 bg-secondary">
+  <a class="p-4 bg-primary rounded-r-2xl" routerLink="/">
+    <img src="/assets/logo.svg" alt="Home" />
+  </a>
+  <div class="flex ml-auto space-x-4">
+    <button title="Info" class="w-5" (click)="dialog.open(infoDialog)">
+      <img
+        src="/assets/icons8-info.svg"
+        alt="Usage info"
+        width="14"
+        height="14" />
+    </button>
+    <button (click)="toggleTheme()">
+      <img
+        [src]="
+          theme === 'dark' ? '/assets/icon-sun.svg' : '/assets/icon-moon.svg'
+        "
+        alt="Theme" />
+    </button>
+    <div
+      class="flex items-center justify-center w-16 border-l border-solid border-l-slate-400">
+      <button class="self-center" (click)="dialog.open(authModal)">
+        <img
+          src="/assets/placeholder-person.jpg"
+          alt="Profile"
+          class="w-8 h-8 rounded-full"
+          width="32"
+          height="32" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<ng-template #infoDialog>
+  <div class="text-sm text-center dark:text-color-1">
+    <h3 class="mb-4">
+      Hey there, welcome to the <strong>invoices manager</strong> app 🎉
+    </h3>
+    <p class="text-left">
+      You can create your own invoices and start experimenting with the app, or
+      you can <strong>click the button below</strong> to quickly generate demo
+      data!
+    </p>
+
+    <button
+      (click)="generateDemoData()"
+      class="mt-8 min-w-[150px] self-center px-3 py-3 text-xs text-white transition-transform rounded-full bg-primary hover:bg-primary-light active:translate-y-1 disabled:opacity-80">
+      Generate demo data
+    </button>
+
+    <p
+      class="mt-10 text-xs text-color-2 dark:text-color-1"
+      *ngIf="auth.isLoggedIn">
+      PS: To be able to see the demo data, you have to be logged out.
+    </p>
+  </div>
+</ng-template>
+
+<ng-template #authModal>
+  <div class="text-sm text-center dark:text-color-1">
+    <div *ngIf="!auth.isLoggedIn; else elseBlock">
+      <p class="mb-4">You can login or create a new account down below</p>
+
+      <app-auth-form (finished)="dialog.close()"></app-auth-form>
+
+      <p class="mt-10 text-xs text-color-2 dark:text-color-1">
+        PS: You can keep using the website without logging in, but keep in mind
+        your changes will be local to this device only.
+      </p>
+    </div>
+
+    <ng-template #elseBlock>
+      <div class="flex flex-col justify-center items-center min-h-[50px]">
+        <strong>
+          You are logged in as
+          <span class="text-primary">
+            {{ auth.user?.username }}
+          </span>
+        </strong>
+
+        <button
+          (click)="logout()"
+          class="mt-8 min-w-[150px] self-center px-3 py-3 text-xs text-white transition-transform rounded-full bg-primary hover:bg-primary-light active:translate-y-1 disabled:opacity-80">
+          Log out
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</ng-template>

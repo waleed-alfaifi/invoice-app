@@ -1,0 +1,15 @@
+<app-back></app-back>
+
+<div class="mx-auto">
+  <h1 class="my-4">
+    Edit <span class="text-color-2">#</span>{{ invoiceDisplayId }}
+  </h1>
+
+  <app-invoice-form
+    [initialData]="invoice"
+    (submittedInvoice)="onEdit($event)"
+    (cancel)="redirectToDetails()">
+    <span cancelText>Cancel</span>
+    <span submitText>Save Changes</span>
+  </app-invoice-form>
+</div>

@@ -1,0 +1,56 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-2xl font-bold md:text-3xl;
+  }
+
+  h2 {
+    @apply text-xl font-bold;
+  }
+
+  h3 {
+    @apply text-lg font-bold md:text-xl;
+  }
+
+  h4 {
+    @apply text-lg font-bold;
+  }
+
+  img {
+    @apply w-full h-auto;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "League Spartan", sans-serif;
+  font-size: 20px;
+}
+
+input.ng-valid.ng-dirty,
+select.ng-valid.ng-dirty {
+  @apply border border-green-500 border-solid;
+}
+
+input.ng-invalid.ng-dirty,
+select.ng-invalid.ng-dirty {
+  @apply border border-red-600 border-solid;
+}
+
+form.ng-submitted input.ng-invalid,
+form.ng-submitted select.ng-invalid {
+  @apply border border-red-600 border-solid;
+}
+
+.custom-dialog-container .mat-dialog-container {
+  @apply bg-card-light dark:bg-dark-bg;
+}
