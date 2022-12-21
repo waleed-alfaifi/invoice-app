@@ -42,15 +42,23 @@
       data!
     </p>
 
+    <p class="mt-4 text-left">
+      You can also check out the source code on
+      <a
+        href="https://github.com/waleed-alfaifi/invoice-app"
+        target="_blank"
+        class="text-blue-600">
+        GitHub</a
+      >.
+    </p>
+
     <button
       (click)="generateDemoData()"
-      class="mt-8 min-w-[150px] self-center px-3 py-3 text-xs text-white transition-transform rounded-full bg-primary hover:bg-primary-light active:translate-y-1 disabled:opacity-80">
+      class="mt-4 min-w-[150px] self-center px-3 py-3 text-xs text-white transition-transform rounded-full bg-primary hover:bg-primary-light active:translate-y-1 disabled:opacity-80">
       Generate demo data
     </button>
 
-    <p
-      class="mt-10 text-xs text-color-2 dark:text-color-1"
-      *ngIf="auth.isLoggedIn">
+    <p class="mt-10 text-xs text-color-2 dark:text-color-1">
       PS: To be able to see the demo data, you have to be logged out.
     </p>
   </div>
