@@ -58,7 +58,7 @@
       Generate demo data
     </button>
 
-    <p class="mt-10 text-xs text-color-2 dark:text-color-1">
+    <p class="mt-10 text-xs text-color-2 dark:text-color-1" *ngIf="auth.isLoggedIn">
       PS: To be able to see the demo data, you have to be logged out.
     </p>
   </div>
